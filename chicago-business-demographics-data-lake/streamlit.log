@@ -1,0 +1,57 @@
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://172.28.127.116:8501
+
+  For better performance, install the Watchdog module:
+
+  $ xcode-select --install
+  $ pip install watchdog
+            
+2025-10-01 15:11:06.883 Please replace `use_container_width` with `width`.
+
+`use_container_width` will be removed after 2025-12-31.
+
+For `use_container_width=True`, use `width='stretch'`. For `use_container_width=False`, use `width='content'`.
+2025-10-01 15:11:06.895 Uncaught app execution
+Traceback (most recent call last):
+  File "/Users/moeinghaeini/Desktop/chicago-business-owners-data-engineering/chicago-business-demographics-data-lake/venv/lib/python3.13/site-packages/streamlit/runtime/scriptrunner/exec_code.py", line 128, in exec_func_with_error_handling
+    result = func()
+  File "/Users/moeinghaeini/Desktop/chicago-business-owners-data-engineering/chicago-business-demographics-data-lake/venv/lib/python3.13/site-packages/streamlit/runtime/scriptrunner/script_runner.py", line 669, in code_to_exec
+    exec(code, module.__dict__)  # noqa: S102
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moeinghaeini/Desktop/chicago-business-owners-data-engineering/chicago-business-demographics-data-lake/src/dashboard/enhanced_streamlit_app.py", line 749, in <module>
+    main()
+    ~~~~^^
+  File "/Users/moeinghaeini/Desktop/chicago-business-owners-data-engineering/chicago-business-demographics-data-lake/src/dashboard/enhanced_streamlit_app.py", line 196, in main
+    show_enhanced_businesses(date_range, business_types)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/moeinghaeini/Desktop/chicago-business-owners-data-engineering/chicago-business-demographics-data-lake/src/dashboard/enhanced_streamlit_app.py", line 350, in show_enhanced_businesses
+    fig = px.bar(
+        business_type_data,
+    ...<4 lines>...
+        color_continuous_scale='Viridis'
+    )
+  File "/Users/moeinghaeini/Desktop/chicago-business-owners-data-engineering/chicago-business-demographics-data-lake/venv/lib/python3.13/site-packages/plotly/express/_chart_types.py", line 381, in bar
+    return make_figure(
+        args=locals(),
+    ...<2 lines>...
+        layout_patch=dict(barmode=barmode),
+    )
+  File "/Users/moeinghaeini/Desktop/chicago-business-owners-data-engineering/chicago-business-demographics-data-lake/venv/lib/python3.13/site-packages/plotly/express/_core.py", line 2491, in make_figure
+    args = build_dataframe(args, constructor)
+  File "/Users/moeinghaeini/Desktop/chicago-business-owners-data-engineering/chicago-business-demographics-data-lake/venv/lib/python3.13/site-packages/plotly/express/_core.py", line 1737, in build_dataframe
+    df_output, wide_id_vars = process_args_into_dataframe(
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        args,
+        ^^^^^
+    ...<4 lines>...
+        native_namespace,
+        ^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/moeinghaeini/Desktop/chicago-business-owners-data-engineering/chicago-business-demographics-data-lake/venv/lib/python3.13/site-packages/plotly/express/_core.py", line 1338, in process_args_into_dataframe
+    raise ValueError(err_msg)
+ValueError: Value of 'x' is not the name of a column in 'data_frame'. Expected one of ['account_number', 'legal_name', 'total_owners', 'individual_owners', 'corporate_owners', 'diversity_score', 'complexity_score'] but received: business_type
+  Stopping...

@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # Data Lake API Service
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - DEBUG=True
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    command: python src/api/main.py
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Streamlit Dashboard Service
+  dashboard:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - API_BASE_URL=http://api:8000
+    volumes:
+      - ./data:/app/data
+      - ./src/dashboard:/app/src/dashboard
+    command: streamlit run src/dashboard/streamlit_app.py --server.port=8501 --server.address=0.0.0.0
+    depends_on:
+      - api
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8501"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Data Processing Service
+  pipeline:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./scripts:/app/scripts
+      - ./src:/app/src
+      - ./config:/app/config
+    command: python scripts/run_pipeline.py --source-file /app/data/Business_Owners.csv --mode full
+    depends_on:
+      - api
+
+volumes:
+  data:
+    driver: local
